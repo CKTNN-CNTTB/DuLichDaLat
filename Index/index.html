@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Web Design</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang chủ - Lê Sỹ Nguyên</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">Nguyên</a>
+      <nav class="nav">
+        <a href="#bai-tap">Bài tập</a>
+        <a href="hoca/index.html">Hồ cá</a>
+        <a href="Profile/profile.html">CV cá nhân</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <section class="hero">
+      <h1>Tổng hợp bài tập thực hành web</h1>
+      <p>Trang chủ liên kết tới các bài tập trên GitHub Pages: <code>LeSyNguyen52.github.io</code></p>
+    </section>
+
+    <section id="bai-tap" class="card-grid">
+      <article class="card">
+        <h2>Hồ cá</h2>
+        <p>Sử dụng tài nguyên từ <code>aquarium.zip</code> để dựng cảnh hồ cá.</p>
+        <a href="hoca/index.html" class="btn">Mở bài Hồ cá</a>
+      </article>
+
+      <article class="card">
+        <h2>CV cá nhân</h2>
+        <p>Trang giới thiệu thông tin cá nhân, học vấn và kỹ năng.</p>
+        <a href="Profile/profile.html" class="btn">Mở CV cá nhân</a>
+      </article>
+
+      <article class="card">
+        <h2>Hàng hóa</h2>
+        <p>Ví dụ trang hàng hóa hoặc bài tập thực hành bổ sung.</p>
+        <a href="hanghoa.html" class="btn">Mở bài hàng hóa</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Lê Sỹ Nguyên - 52.01.CNTT B | GitHub Pages</p>
+    </div>
+  </footer>
 </body>
 </html>
