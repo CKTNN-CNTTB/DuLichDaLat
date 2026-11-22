@@ -1,54 +1,516 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trang chủ - Lê Sỹ Nguyên</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đà Lạt Travel | Khám Phá Thành Phố Ngàn Hoa & Sương Mù</title>
+    
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header class="header">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="logo">Nguyên</a>
-      <nav class="nav">
-        <a href="Hanghoa/hanghoa.html">Hàng hóa</a>
-        <a href="Hoca/hoca.html">Hồ cá</a>
-        <a href="Profile/profile.html">CV cá nhân</a>
-      </nav>
-    </div>
-  </header>
+<body class="bg-cream text-slate-800 font-sans antialiased transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100 selection:bg-pine-600 selection:text-white">
 
-  <main class="container main-content">
-    <section class="hero">
-      <h1>Tổng hợp bài tập thực hành web</h1>
-      <p>Trang chủ liên kết tới các bài tập trên GitHub Pages: <code>LeSyNguyen52.github.io</code></p>
+    <!-- ==================== 1. HEADER & NAVIGATION ==================== -->
+    <header id="navbar" class="fixed top-0 inset-x-0 z-40 transition-all duration-300 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/60 dark:border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pine-700 to-pine-900 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-tree text-lg text-daquy-400"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl font-bold tracking-tight text-pine-900 dark:text-white block leading-none">Đà Lạt Travel</span>
+                        <span class="text-[11px] uppercase tracking-widest text-pine-600 dark:text-pine-400 font-semibold">Misty & Pine</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-medium">
+                    <a href="#home" class="text-slate-700 hover:text-pine-700 dark:text-slate-300 dark:hover:text-pine-400 transition-colors">Trang chủ</a>
+                    <a href="#destinations" class="text-slate-700 hover:text-pine-700 dark:text-slate-300 dark:hover:text-pine-400 transition-colors">Điểm đến</a>
+                    <a href="#tours" class="text-slate-700 hover:text-pine-700 dark:text-slate-300 dark:hover:text-pine-400 transition-colors">Tour & Trải nghiệm</a>
+                    <a href="#cuisine" class="text-slate-700 hover:text-pine-700 dark:text-slate-300 dark:hover:text-pine-400 transition-colors">Ẩm thực</a>
+                    <a href="#planner" class="text-slate-700 hover:text-pine-700 dark:text-slate-300 dark:hover:text-pine-400 transition-colors">Lịch trình gợi ý</a>
+                    <a href="#reviews" class="text-slate-700 hover:text-pine-700 dark:text-slate-300 dark:hover:text-pine-400 transition-colors">Đánh giá</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Dark/Light Mode Toggle -->
+                    <button id="theme-toggle" aria-label="Chuyển đổi giao diện Sáng/Tối" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-300 transition-colors">
+                        <i id="theme-icon" class="fa-solid fa-moon text-base"></i>
+                    </button>
+
+                    <!-- Wishlist Button -->
+                    <button onclick="openDrawer('wishlist')" aria-label="Danh sách yêu thích" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors">
+                        <i class="fa-regular fa-heart text-base text-rose-500"></i>
+                        <span id="wishlist-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-rose-500 text-white text-[11px] font-bold flex items-center justify-center shadow">0</span>
+                    </button>
+
+                    <!-- Booking Cart Button -->
+                    <button onclick="openDrawer('cart')" class="relative flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-pine-800 hover:bg-pine-700 text-white text-sm font-semibold shadow-sm transition-all">
+                        <i class="fa-solid fa-suitcase-rolling"></i>
+                        <span class="hidden sm:inline">Đặt Tour</span>
+                        <span id="cart-badge" class="w-5 h-5 rounded-full bg-daquy-500 text-slate-950 text-[11px] font-bold flex items-center justify-center">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-btn" aria-label="Mở menu" class="lg:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-2 shadow-xl">
+            <a href="#home" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl hover:bg-pine-50 dark:hover:bg-slate-800 font-medium">Trang chủ</a>
+            <a href="#destinations" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl hover:bg-pine-50 dark:hover:bg-slate-800 font-medium">Điểm đến nổi bật</a>
+            <a href="#tours" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl hover:bg-pine-50 dark:hover:bg-slate-800 font-medium">Tour & Trải nghiệm</a>
+            <a href="#cuisine" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl hover:bg-pine-50 dark:hover:bg-slate-800 font-medium">Ẩm thực Đà Lạt</a>
+            <a href="#planner" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl hover:bg-pine-50 dark:hover:bg-slate-800 font-medium">Gợi ý Lịch trình</a>
+            <a href="#reviews" onclick="closeMobileMenu()" class="block px-4 py-2.5 rounded-xl hover:bg-pine-50 dark:hover:bg-slate-800 font-medium">Đánh giá & Liên hệ</a>
+        </div>
+    </header>
+
+    <!-- ==================== 2. HERO SECTION ==================== -->
+    <section id="home" class="relative pt-20 min-h-[92vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTURY3LdK_lVUojEO418Ag0PwGoO_WcUgdm4s0PpPXgsg&s=10" 
+                 onerror="this.src='https://placehold.co/1920x1080/064e3b/ffffff?text=Da+Lat+Rung+Thong+Suong+Mu'"
+                 alt="Rừng thông và sương mù Đà Lạt" 
+                 class="w-full h-full object-cover object-center scale-105 transition-transform duration-1000">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-900/45 to-cream dark:to-slate-950"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center text-white">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-amber-200 text-xs sm:text-sm font-medium mb-6">
+                <i class="fa-solid fa-sparkles text-daquy-400"></i>
+                <span>Mùa Hoa Dã Quỳ & Săn Mây Đẹp Nhất Năm</span>
+            </div>
+
+            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-md">
+                Chạm Vào Sương Mù, <br class="hidden sm:inline" />
+                <span class="text-daquy-400 italic">Lạc Giữa Ngàn Thông</span>
+            </h1>
+
+            <p class="mt-6 text-base sm:text-lg md:text-xl text-slate-100/90 max-w-2xl mx-auto font-normal leading-relaxed">
+                Khám phá vẻ đẹp bình yên của thành phố ngàn hoa qua những cung đường săn mây, đồi thông vi vu, kiến trúc Pháp cổ kính và hương vị ẩm thực ấm nồng.
+            </p>
+
+            <!-- Quick Search Bar -->
+            <div class="mt-10 max-w-4xl mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg p-3 sm:p-4 rounded-2xl shadow-2xl border border-white/20 text-left">
+                <form id="hero-search-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-pine-700 dark:text-pine-400 mb-1">
+                            <i class="fa-solid fa-location-dot mr-1"></i> Điểm đến / Từ khóa
+                        </label>
+                        <input type="text" id="search-keyword" placeholder="VD: Đồi Đa Phú, Thác Datanla..." class="w-full bg-transparent text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none">
+                    </div>
+
+                    <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-pine-700 dark:text-pine-400 mb-1">
+                            <i class="fa-solid fa-compass mr-1"></i> Loại hình
+                        </label>
+                        <select id="search-category" class="w-full bg-transparent text-sm text-slate-800 dark:text-white focus:outline-none">
+                            <option value="all" class="dark:bg-slate-800">Tất cả trải nghiệm</option>
+                            <option value="nature" class="dark:bg-slate-800">Thiên nhiên & Săn mây</option>
+                            <option value="architecture" class="dark:bg-slate-800">Check-in & Kiến trúc</option>
+                            <option value="farm" class="dark:bg-slate-800">Vườn hoa & Nông trại</option>
+                            <option value="cafe" class="dark:bg-slate-800">Cà phê chill</option>
+                        </select>
+                    </div>
+
+                    <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-pine-700 dark:text-pine-400 mb-1">
+                            <i class="fa-regular fa-clock mr-1"></i> Thời gian dự kiến
+                        </label>
+                        <select id="search-duration" class="w-full bg-transparent text-sm text-slate-800 dark:text-white focus:outline-none">
+                            <option value="2N1D" class="dark:bg-slate-800">2 Ngày 1 Đêm</option>
+                            <option value="3N2D" selected class="dark:bg-slate-800">3 Ngày 2 Đêm</option>
+                            <option value="4N3D" class="dark:bg-slate-800">4 Ngày 3 Đêm</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full h-full min-h-[54px] rounded-xl bg-gradient-to-r from-pine-700 to-pine-800 hover:from-pine-600 hover:to-pine-700 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-pine-700/30 transition-all">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Khám Phá Ngay</span>
+                    </button>
+                </form>
+            </div>
+        </div>
     </section>
 
-    <section id="bai-tap" class="card-grid">
-      <article class="card">
-        <h2>Hồ cá</h2>
-        <p>Sử dụng tài nguyên từ <code>aquarium.zip</code> để dựng cảnh hồ cá.</p>
-        <a href="Hoca/hoca.html" class="btn">Mở bài Hồ cá</a>
-      </article>
+    <!-- ==================== 3. WEATHER WIDGET ==================== -->
+    <section class="relative z-20 -mt-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-5 sm:p-6">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                <div class="flex items-center gap-4 sm:gap-5">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-100 to-pine-100 dark:from-slate-800 dark:to-pine-900/50 flex items-center justify-center text-3xl text-pine-700 dark:text-daquy-400 shrink-0 shadow-inner">
+                        <i id="weather-icon" class="fa-solid fa-cloud-sun"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-pine-700 dark:text-pine-400 bg-pine-50 dark:bg-pine-900/40 px-2.5 py-0.5 rounded-full">
+                                <i class="fa-solid fa-circle text-[8px] text-emerald-500 mr-1 animate-pulse"></i> Thời tiết Đà Lạt hôm nay
+                            </span>
+                            <div class="hidden sm:flex items-center gap-1 ml-2 text-xs">
+                                <button onclick="setWeatherTime('morning')" class="weather-btn px-2 py-0.5 rounded bg-pine-700 text-white font-medium" data-time="morning">Sáng sớm</button>
+                                <button onclick="setWeatherTime('noon')" class="weather-btn px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300" data-time="noon">Trưa</button>
+                                <button onclick="setWeatherTime('night')" class="weather-btn px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300" data-time="night">Tối</button>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-3 mt-1">
+                            <span id="weather-temp" class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">16°C</span>
+                            <span id="weather-desc" class="text-sm sm:text-base font-medium text-slate-600 dark:text-slate-300">Se lạnh, sương mù nhẹ giăng lối</span>
+                        </div>
+                    </div>
+                </div>
 
-      <article class="card">
-        <h2>CV cá nhân</h2>
-        <p>Trang giới thiệu thông tin cá nhân, học vấn và kỹ năng.</p>
-        <a href="Profile/profile.html" class="btn">Mở CV cá nhân</a>
-      </article>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto border-t lg:border-t-0 pt-4 lg:pt-0 border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60">
+                        <i class="fa-solid fa-droplet text-sky-500 text-lg"></i>
+                        <div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Độ ẩm & Gió</p>
+                            <p id="weather-humidity" class="text-sm font-semibold text-slate-800 dark:text-slate-200">84% • Gió nhẹ 9 km/h</p>
+                        </div>
+                    </div>
 
-      <article class="card">
-        <h2>Hàng hóa</h2>
-        <p>Ví dụ trang hàng hóa hoặc bài tập thực hành bổ sung.</p>
-        <a href="Hanghoa/hanghoa.html" class="btn">Mở bài hàng hóa</a>
-      </article>
+                    <div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40">
+                        <i class="fa-solid fa-shirt text-daquy-600 dark:text-daquy-400 text-lg"></i>
+                        <div>
+                            <p class="text-xs text-amber-800/80 dark:text-amber-300/80">Gợi ý trang phục</p>
+                            <p id="weather-outfit" class="text-sm font-semibold text-slate-800 dark:text-amber-100">Áo len mỏng, áo khoác trench coat & khăn choàng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p>Lê Sỹ Nguyên - 52.01.CNTT B | GitHub Pages</p>
+    <!-- ==================== 4. DESTINATIONS ==================== -->
+    <section id="destinations" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-pine-700 dark:text-pine-400">Khám Phá Vùng Đất Lạnh</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2">Điểm Đến Nổi Bật Tại Đà Lạt</h2>
+            </div>
+
+            <div id="destination-filters" class="flex flex-wrap gap-2">
+                <button onclick="filterDestinations('all')" class="filter-pill active px-4 py-2 rounded-full text-sm font-semibold bg-pine-800 text-white shadow-sm transition-all" data-cat="all">Tất cả</button>
+                <button onclick="filterDestinations('nature')" class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-pine-600 transition-all" data-cat="nature">Thiên nhiên & Săn mây</button>
+                <button onclick="filterDestinations('architecture')" class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-pine-600 transition-all" data-cat="architecture">Check-in & Kiến trúc</button>
+                <button onclick="filterDestinations('farm')" class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-pine-600 transition-all" data-cat="farm">Vườn hoa & Nông trại</button>
+                <button onclick="filterDestinations('cafe')" class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-pine-600 transition-all" data-cat="cafe">Cà phê chill</button>
+            </div>
+        </div>
+
+        <div id="destinations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+    </section>
+
+    <!-- ==================== 5. TOURS & PACKAGES ==================== -->
+    <section id="tours" class="py-20 bg-pine-50/70 dark:bg-slate-900/50 border-y border-slate-200/60 dark:border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-pine-700 dark:text-pine-400">Hành Trình Trọn Vẹn</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2">Tour & Trải Nghiệm Bản Địa</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-3 text-sm sm:text-base">Lịch trình được thiết kế tinh tế bởi thổ địa Đà Lạt, bao gồm xe đưa đón tận nơi, hướng dẫn viên nhiệt tình và vé tham quan.</p>
+            </div>
+
+            <div id="tours-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. LOCAL CUISINE ==================== -->
+    <section id="cuisine" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-daquy-600 dark:text-daquy-400">Hương Vị Xứ Lạnh</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2">Tinh Hoa Ẩm Thực Đà Lạt</h2>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-400 max-w-md">Giữa tiết trời se lạnh 15°C, không gì tuyệt vời hơn việc thưởng thức những món ăn nóng hổi đặc trưng của phố núi.</p>
+        </div>
+
+        <div id="cuisine-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"></div>
+    </section>
+
+    <!-- ==================== 7. INTERACTIVE ITINERARY PLANNER ==================== -->
+    <section id="planner" class="py-20 bg-gradient-to-br from-pine-900 via-pine-800 to-slate-900 text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="inline-block px-3 py-1 rounded-full bg-daquy-500/20 text-daquy-400 text-xs font-bold uppercase tracking-widest mb-3">Trợ Lý Du Lịch Thông Minh</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold">Tự Thiết Kế Lịch Trình Đà Lạt</h2>
+                <p class="text-pine-100/80 mt-3 text-sm sm:text-base">Chọn quỹ thời gian và phong cách du lịch yêu thích, hệ thống sẽ gợi ý lịch trình chi tiết từng buổi dành riêng cho bạn.</p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-daquy-400 mb-2">1. Thời gian chuyến đi</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" onclick="selectPlannerDay('2N1D')" class="planner-day-btn py-2.5 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 border border-white/20 transition-all" data-day="2N1D">2N1Đ</button>
+                            <button type="button" onclick="selectPlannerDay('3N2D')" class="planner-day-btn py-2.5 rounded-xl text-sm font-semibold bg-daquy-500 text-slate-950 shadow-md transition-all" data-day="3N2D">3N2Đ</button>
+                            <button type="button" onclick="selectPlannerDay('4N3D')" class="planner-day-btn py-2.5 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 border border-white/20 transition-all" data-day="4N3D">4N3Đ</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-daquy-400 mb-2">2. Phong cách trải nghiệm</label>
+                        <select id="planner-style" onchange="generateItinerary()" class="w-full py-2.5 px-4 rounded-xl bg-slate-900/80 border border-white/20 text-white text-sm font-medium focus:outline-none focus:border-daquy-400">
+                            <option value="chill">Nghỉ dưỡng & Cà phê chill</option>
+                            <option value="nature">Khám phá thiên nhiên & Săn mây</option>
+                            <option value="photo">Sống ảo & Kiến trúc cổ điển</option>
+                            <option value="food">Food Tour & Ẩm thực địa phương</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button type="button" onclick="generateItinerary()" class="flex-1 py-2.5 px-4 rounded-xl bg-pine-500 hover:bg-pine-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Tạo Lịch Trình
+                        </button>
+                        <button type="button" onclick="copyItinerary()" title="Sao chép lịch trình" class="py-2.5 px-4 rounded-xl bg-white/15 hover:bg-white/25 text-white text-sm font-semibold transition-all">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                        <button type="button" onclick="window.print()" title="In lịch trình" class="py-2.5 px-4 rounded-xl bg-white/15 hover:bg-white/25 text-white text-sm font-semibold transition-all">
+                            <i class="fa-solid fa-print"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="itinerary-result" class="mt-8 pt-8 border-t border-white/15 space-y-6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 8. TESTIMONIALS & REVIEW FORM ==================== -->
+    <section id="reviews" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div class="lg:col-span-7">
+                <span class="text-xs font-bold uppercase tracking-widest text-pine-700 dark:text-pine-400">Nhật Ký Hành Trình</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2 mb-8">Cảm Nhận Từ Du Khách</h2>
+                <div id="reviews-list" class="space-y-5"></div>
+            </div>
+
+            <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200/80 dark:border-slate-800 sticky top-28">
+                <h3 class="font-serif text-2xl font-bold text-slate-900 dark:text-white">Chia Sẻ Kỷ Niệm Của Bạn</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mt-1 mb-6">Bạn vừa có chuyến đi đáng nhớ tại Đà Lạt? Hãy để lại đánh giá để truyền cảm hứng cho mọi người nhé!</p>
+
+                <form id="review-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Họ và tên *</label>
+                        <input type="text" id="rev-name" required placeholder="Nhập tên của bạn..." class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-pine-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Điểm đến / Tour đã trải nghiệm</label>
+                        <input type="text" id="rev-place" placeholder="VD: Tour Săn Mây Đồi Đa Phú" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-pine-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Đánh giá sao</label>
+                        <div id="star-rating-input" class="flex items-center gap-2 text-2xl text-daquy-500 cursor-pointer">
+                            <i class="fa-solid fa-star" data-val="1"></i>
+                            <i class="fa-solid fa-star" data-val="2"></i>
+                            <i class="fa-solid fa-star" data-val="3"></i>
+                            <i class="fa-solid fa-star" data-val="4"></i>
+                            <i class="fa-solid fa-star" data-val="5"></i>
+                        </div>
+                        <input type="hidden" id="rev-rating" value="5">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Cảm nhận chi tiết *</label>
+                        <textarea id="rev-comment" rows="3" required placeholder="Chia sẻ trải nghiệm tuyệt vời của bạn tại Đà Lạt..." class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-pine-600"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 rounded-xl bg-pine-800 hover:bg-pine-700 text-white font-semibold text-sm shadow-md transition-all">
+                        Gửi Đánh Giá Ngay
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 9. FOOTER ==================== -->
+    <footer class="bg-slate-950 text-slate-300 pt-16 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-pine-800 flex items-center justify-center text-daquy-400">
+                            <i class="fa-solid fa-tree text-lg"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold text-white">Đà Lạt Travel</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-5">
+                        Đồng hành cùng bạn khám phá từng góc nhỏ thơ mộng, những rừng thông đại ngàn và nét văn hóa bản địa đậm đà của thành phố Đà Lạt.
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-pine-700 flex items-center justify-center text-white transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-pine-700 flex items-center justify-center text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-pine-700 flex items-center justify-center text-white transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-pine-700 flex items-center justify-center text-white transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider text-xs mb-4">Khám Phá Nhanh</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#destinations" class="hover:text-daquy-400 transition-colors">Điểm đến săn mây</a></li>
+                        <li><a href="#tours" class="hover:text-daquy-400 transition-colors">Tour trải nghiệm bản địa</a></li>
+                        <li><a href="#cuisine" class="hover:text-daquy-400 transition-colors">Bản đồ ẩm thực Đà Lạt</a></li>
+                        <li><a href="#planner" class="hover:text-daquy-400 transition-colors">Tạo lịch trình tự động</a></li>
+                        <li><a href="#reviews" class="hover:text-daquy-400 transition-colors">Đánh giá từ du khách</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider text-xs mb-4">Liên Hệ Hỗ Trợ</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-pine-500 mt-1"></i>
+                            <span>Số 18 Đường Trần Phú, Phường 3, TP. Đà Lạt, Lâm Đồng</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-pine-500"></i>
+                            <span>1900 6868 • 0909 123 456</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-pine-500"></i>
+                            <span>dalattravel@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider text-xs mb-4">Nhận Bản Tin Ưu Đãi</h4>
+                    <p class="text-sm text-slate-400 mb-4">Nhận ngay mã giảm giá 15% cho tour săn mây và cẩm nang du lịch Đà Lạt theo mùa.</p>
+                    <form id="newsletter-form" class="flex gap-2">
+                        <input type="email" required placeholder="Email của bạn..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white focus:outline-none focus:border-pine-500">
+                        <button type="submit" class="px-4 py-2.5 rounded-xl bg-daquy-500 hover:bg-daquy-400 text-slate-950 font-bold text-sm shrink-0 transition-colors">
+                            Gửi
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>© 2026 Đà Lạt Travel. Thiết kế với tình yêu dành cho Thành phố Ngàn Hoa.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-slate-300">Điều khoản dịch vụ</a>
+                    <a href="#" class="hover:text-slate-300">Chính sách bảo mật</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL: DESTINATION DETAIL ==================== -->
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-800">
+            <div class="relative h-64 sm:h-72">
+                <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+                <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-950/60 hover:bg-slate-950 text-white flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <span id="modal-badge" class="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-pine-800/90 text-white text-xs font-semibold backdrop-blur-sm"></span>
+            </div>
+            <div class="p-6 sm:p-8">
+                <div class="flex items-start justify-between gap-4">
+                    <h3 id="modal-title" class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white"></h3>
+                    <div class="flex items-center gap-1 text-daquy-500 font-bold shrink-0">
+                        <i class="fa-solid fa-star"></i>
+                        <span id="modal-rating"></span>
+                    </div>
+                </div>
+                <p id="modal-desc" class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed mt-4"></p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 text-sm">
+                    <div>
+                        <span class="text-xs text-slate-400 block">Địa chỉ</span>
+                        <span id="modal-address" class="font-semibold text-slate-800 dark:text-slate-200"></span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block">Giờ mở cửa & Giá vé</span>
+                        <span id="modal-hours-price" class="font-semibold text-pine-700 dark:text-pine-400"></span>
+                    </div>
+                </div>
+
+                <div class="mt-6 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-pine-50 dark:bg-slate-800 p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-pine-700 text-white flex items-center justify-center">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold uppercase text-pine-700 dark:text-pine-400">Tọa độ bản đồ Đà Lạt</p>
+                            <p id="modal-coords" class="text-xs text-slate-600 dark:text-slate-300">11.9404° N, 108.4583° E • Cách chợ Đà Lạt ~4.5km</p>
+                        </div>
+                    </div>
+                    <a id="modal-map-link" href="https://maps.google.com/?q=Da+Lat" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-700 text-xs font-semibold shadow-sm hover:bg-pine-700 hover:text-white transition-colors">
+                        Mở Google Maps <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-  </footer>
+
+    <!-- ==================== DRAWER: BOOKING CART & WISHLIST ==================== -->
+    <div id="side-drawer-overlay" onclick="closeDrawer()" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
+    <aside id="side-drawer" class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-800 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div class="flex gap-2">
+                <button onclick="switchDrawerTab('cart')" id="tab-cart-btn" class="px-3.5 py-1.5 rounded-xl text-sm font-bold bg-pine-800 text-white">Giỏ Đặt Tour</button>
+                <button onclick="switchDrawerTab('wishlist')" id="tab-wishlist-btn" class="px-3.5 py-1.5 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Yêu Thích</button>
+            </div>
+            <button onclick="closeDrawer()" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div id="drawer-cart-content" class="flex-1 overflow-y-auto p-5 space-y-5">
+            <div id="cart-items-container" class="space-y-4"></div>
+
+            <form id="checkout-form" class="hidden pt-5 border-t border-slate-200 dark:border-slate-800 space-y-3.5">
+                <h4 class="font-bold text-sm uppercase tracking-wider text-pine-700 dark:text-pine-400">Thông Tin Đặt Tour</h4>
+                <input type="text" id="cust-name" required placeholder="Họ và tên người đặt *" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="tel" id="cust-phone" required placeholder="Số điện thoại *" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                    <input type="date" id="cust-date" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                </div>
+                <input type="email" id="cust-email" placeholder="Email nhận vé điện tử" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                <textarea id="cust-note" rows="2" placeholder="Ghi chú điểm đón tại Đà Lạt..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm"></textarea>
+
+                <div class="p-4 rounded-2xl bg-pine-50 dark:bg-pine-950/40 flex items-center justify-between">
+                    <span class="text-sm font-semibold">Tổng thanh toán:</span>
+                    <span id="cart-total-price" class="text-xl font-bold text-pine-800 dark:text-daquy-400">0đ</span>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-pine-700 to-pine-800 hover:from-pine-600 hover:to-pine-700 text-white font-bold text-sm shadow-lg transition-all">
+                    Xác Nhận Đặt Tour Ngay
+                </button>
+            </form>
+        </div>
+
+        <div id="drawer-wishlist-content" class="hidden flex-1 overflow-y-auto p-5 space-y-4">
+            <div id="wishlist-items-container" class="space-y-3"></div>
+        </div>
+    </aside>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
